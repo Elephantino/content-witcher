@@ -1,44 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
+<section class="checkout">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Document</title>
-</head>
+  <ol class="tab-list list-reset">
+    <li class="tab-item">1</li>
+    <li class="tab-item is-active">2</li>
+    <li class="tab-item">3</li>
+    <li class="tab-item">4</li>
+    <li class="tab-item">5</li>
+  </ol>
 
-<body>
-  <div class="wrapper">
+  <ul class="content-list list-reset">
+    <li class="content-item">Content-1</li>
+    <li class="content-item is-active">Content-2</li>
+    <li class="content-item">Content-3</li>
+    <li class="content-item">Content-4</li>
+    <li class="content-item">Content-5</li>
+  </ul>
 
-    <main class="main">
-
-      <section class="checkout">
-
-        <ol class="tab-list list-reset">
-          <li class="tab-item">1</li>
-          <li class="tab-item is-active">2</li>
-          <li class="tab-item">3</li>
-          <li class="tab-item">4</li>
-          <li class="tab-item">5</li>
-        </ol>
-
-        <ul class="content-list list-reset">
-          <li class="content-item">Content-1</li>
-          <li class="content-item is-active">Content-2</li>
-          <li class="content-item">Content-3</li>
-          <li class="content-item">Content-4</li>
-          <li class="content-item">Content-5</li>
-        </ul>
-
-      </section>
+</section>
 
 
-    </main>
 
-  </div>
-  <script src="main.js"></script>
-</body>
 
-</html>
+* {
+  box-sizing: border-box;
+}
+
+.list-reset {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.checkout {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  max-width: 350px;
+  padding: 5px;
+  background-color: cadetblue;
+}
+
+.tab-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 5px;
+  font-size: 1.3em;
+}
+.tab-list li {
+  padding: .5em 0;
+  border: 2px solid black;
+  flex: 1;
+  text-align: center;
+  transition: flex 1s;
+  cursor: pointer;
+}
+.tab-list li.is-active {
+  flex: 2;
+}
+
+
+.content-list {
+  display: flex;
+  border: 2px solid black;
+  width: 100%;
+  overflow: hidden;
+}
+.content-item {
+  display: none;
+  background-color: rgb(196, 146, 146);
+  width: 100%;
+  padding: 3em 0;
+  text-align: center;
+}
+
+.is-active {
+  display: block;
+}
+
+
+
+
+
+
+
+      
+const tabItems = Array.from(document.querySelectorAll('.tab-item'));  
+const contentItems = Array.from(document.querySelectorAll('.content-item'));
+//  Array.from что бы работал метод .find
+
+const clearActiveClass = (element, className = 'is-active') => {
+  element.find(item => item.classList.remove(`${className}`))
+}
+const setActiveClass = (element, index, className = 'is-active') => {
+  element[index].classList.add(`${className}`)
+}
+
+const checkoutTabs = (item, index) => {
+  item.addEventListener('click', () => {
+
+    if (item.classList.contains('is-active')) return
+
+    clearActiveClass(tabItems)
+    clearActiveClass(contentItems)
+
+    setActiveClass(tabItems, index)
+    setActiveClass(contentItems, index)
+
+  })
+}
+
+tabItems.forEach(checkoutTabs);
